@@ -1,0 +1,212 @@
+1. palindrome : 
+
+import java.util.*;
+public class palindrome {
+	public static int reversedNumber(int num)
+	{
+		int reversed =0;
+		while(num !=0)
+		{
+			int digit = num %10;
+			reversed = reversed *10 +digit;
+			num = num / 10;	
+		}
+		return reversed;
+	}
+
+	public static void main(String[] args) {
+	 Scanner sc= new Scanner(System.in);
+	 System.out.println("Enter the 4 digit number : ");
+	 int num = sc.nextInt();
+	 if(num <1000 || num >9999)
+	 {
+		 System.out.println("Enter a valid number ");
+	 }
+	 else 
+	 {
+		 int reversedNumber = reversedNumber(num);
+		 if (num== reversedNumber)
+		 {
+			 System.out.println("The number is palindrome");
+		 }
+		 else
+		 {
+			 System.out.println("The number is not palindrome");
+		 }
+	 }
+
+	}
+
+}
+
+
+2. Array removal : 
+
+import java.util.*;
+public class Arrayremoval {
+
+		    public static void main(String[] args) {
+		        Scanner sc = new Scanner(System.in);
+		        System.out.println("Enter the number of elements : ");
+		        int n = sc.nextInt();
+		        System.out.println("Enter the Array values : ");
+		        int input[] = new int[n];
+		        for (int i = 0; i < n; i++) {
+		            input[i] = sc.nextInt();
+		        }
+		        
+		        boolean[] printElement = new boolean[n];
+		        for (int i = 0; i < n; i++) {
+		            printElement[i] = true; 
+		        }
+		        
+		        for (int i = 0; i < n; i++) {
+		            if (printElement[i]) {
+		                for (int j = i + 1; j < n; j++) {
+		                    if (input[i] == input[j]) {
+		                        printElement[j] = false; 
+		                    }
+		                }
+		            }
+		        }
+		        
+		        System.out.println("The duplicated removed array : ");
+		        for (int i = 0; i < n; i++) {
+		            if (printElement[i]) {
+		                System.out.println(input[i]);
+		            }
+		        }
+		    }
+		}
+
+3. salary : 
+
+import java.util.*;
+public class salary {
+
+	public static void main(String[] args) {
+		Scanner sc= new Scanner(System.in);
+		System.out.println("Enter the salary : ");
+		double Salary = sc.nextDouble();
+		double basic =0;
+		double HRA = 0;
+		double DA = 0;
+		
+		if (Salary >=1 && Salary <=4000)
+		{
+			basic = Salary;
+            HRA = 0.1 * Salary;
+            DA = 0.5 * Salary;
+		}
+		else if (Salary > 4000 && Salary <= 8000) {
+            basic = Salary;
+            HRA = 0.2 * Salary;
+            DA = 0.6 * Salary;
+        } else if (Salary > 8000 && Salary <= 12000) {
+            basic = Salary;
+            HRA = 0.25 * Salary;
+            DA = 0.7 * Salary;
+        } else if (Salary > 12000) {
+            basic = Salary;
+            HRA = 0.3 * Salary;
+            DA = 0.8 * Salary;
+        } 
+        else 
+        {
+          System.out.println("Invalid salary entered..");
+			}
+		
+		double salary = basic + HRA + DA;
+		System.out.println("Basic: " + basic);
+        System.out.println("HRA: " + HRA);
+        System.out.println("DA: " + DA);
+        System.out.println("Gross Salary: " +salary);
+          
+}
+
+
+}
+
+4. Employee Special allowance : 
+
+public class Employee {
+	private String name;
+	private int age;
+	private double salary;
+	
+	public Employee(String name, int age, double salary) {
+        this.name = name;
+        this.age=age;
+        this.salary = salary;
+    }
+
+	public void calculateSalary(double basic, double hra, double da, double specialallowance)
+	{
+		this.salary = basic + hra + da + specialallowance;
+	}
+	 public void calculateSalary(double basic, double hra, double da) {
+	        calculateSalary(basic, hra, da, 0); // mentioning special allowance as 0
+	    }
+
+	    public double getSalary() {
+	        return salary;
+	    }
+	    public void displayDetails() {
+
+	        System.out.println("Name: " + name);
+
+	        System.out.println("Age: " + age);
+
+	        System.out.println("Salary: " + salary);
+
+	    }
+
+	}
+
+           class EmployeeDetails {
+	
+		
+		public static void main(String[] args) {
+			Scanner sc= new Scanner(System.in);
+			Employee[] employees= new Employee[2];
+			 for (int i = 0; i < 2; i++) {
+		            System.out.println("Enter details for Employee " + (i + 1) + ":");
+		            System.out.print("Name: ");
+		            String name = sc.nextLine();
+		            System.out.print("Age: ");
+		            int age = sc.nextInt();
+		            System.out.print("Basic Salary: ");
+		            double basic = sc.nextDouble();
+		            System.out.print("HRA: ");
+		            double hra = sc.nextDouble();
+		            System.out.print("DA: ");
+		            double da = sc.nextDouble();
+		            System.out.print("Special Allowance: ");
+		            double specialAllowance = sc.nextDouble();
+
+		            sc.nextLine();
+
+		            Employee employee;
+		            if (specialAllowance == 0) {
+		                employee = new Employee(name, age, 0);
+		                employee.calculateSalary(basic, hra, da);
+		            } else {
+		                employee = new Employee(name, age, 0);
+		                employee.calculateSalary(basic, hra, da, specialAllowance);
+		            }
+			        employees[i] = employee;
+		}
+			System.out.println("Employee Details");
+			  for (int i = 0; i < 2; i++) 
+			  {
+		           System.out.println("Employee " + (i + 1) + ": " +"details");
+		           employees[i].displayDetails();
+		        }
+			  
+	        
+
+		}
+
+	}
+
+

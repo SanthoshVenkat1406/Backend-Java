@@ -1,0 +1,68 @@
+-- 1. Create the SQL commands that would generate the STRIKE, FIRES, and PICTURES tables.
+    CREATE TABLE STRIKE (
+    ID INT PRIMARY KEY,
+    Date DATE,
+    Time TIME,
+    Lat FLOAT,
+    Lon FLOAT,
+    Intensity INT
+);
+CREATE TABLE FIRES (
+    ID INT PRIMARY KEY,
+    Date DATE,
+    Lat FLOAT,
+    Lon FLOAT,
+    Area FLOAT
+);
+CREATE TABLE PICTURES (
+    ID INT PRIMARY KEY,
+    Strike_FK INT,
+    Date DATE,
+    Filename VARCHAR(255)
+);
+-- 2. Create an SQL command to generate an appropriate LIGHTNING_FIRES table that would connect 
+-- the FIRES table to the STRIKE table:
+
+CREATE TABLE LIGHTNING_FIRES (
+    Strike_ID INT,
+    Fire_ID INT,
+    FOREIGN KEY (Strike_ID) REFERENCES STRIKE(ID),
+    FOREIGN KEY (Fire_ID) REFERENCES FIRES(ID)
+);
+
+-- 3. Write an SQL command that would report a single number for the average intensity for all records in the STRIKE table:
+
+select avg(intensity) as Average_intensity from strike
+
+-- 4. Write an SQL command that would list all STRIKE IDs for those lightning STRIKEs that do not have a picture available in the PICTURES table. Show the result set the query would generate:
+select s.Id from strike s left join pictures p on s.Id = p.strike_fk where p.strike_fk is null
+
+-- 5. Write an SQL command that would list the largest three FIRES in order of the maximum Area burned
+-- by the fire.Show the result set the query would generate:
+
+select * from fires order by area desc limit 3
+
+-- 6. Write an SQL command to report the total Area burned by these largest three FIRES 
+-- (report a single number):
+select sum(area) as Total_areaBurned from (select area from fires order by area desc limit 3) 
+as Largest_fire
+
+-- 7. The lightning strike and fire occurred on the same date and
+-- The lightning strike and fire occurred at the same latitude and longitude
+
+select s.id,s.date, f.id from strike s join fires f on s.date = f.date and s.lat = f.lat and s.lon = f.lon 
+
+-- 8. Create one or more SQL command that would fill the LIGHTNING_FIRES table you created 
+-- in part 2 above with he results from your SQL query from part 7 above.
+
+insert into lightning_fires(strike_id , fire_id) 
+select strike.id as strike_id, fires.id as fire_id from strike inner join fires on strike.date = fires.date 
+and strike.lat = fires.lat and strike.lon = fires.lon
+
+-- 9. Create the result set for the following query (with headers for each column returned)
+select s.lat as Latitude, s.lon as Longitude, p.filename as png 
+from strike s join pictures p on s.Id = p.strike_fk order by p.filename desc 
+
+-- 10. Write the appropriate SQL ALTER command to add a FIRE_FK attribute to the STRIKES table:
+
+alter table strike add fire_fk int
